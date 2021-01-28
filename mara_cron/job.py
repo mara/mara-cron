@@ -21,7 +21,10 @@ class MaraJob(CronJob):
         if not virtual_env_path:
             raise Exception('Could not determine virtual environment path. VIRTUAL_ENV not set')
 
-        job_command = f'source {virtual_env_path}/bin/activate; flask {command}'
+        mara_root_path = f"{virtual_env_path}/.."
+        venv_wrapper_script_path = f"{virtual_env_path}/../.scripts/mara-cron/venv_wrapper.bash"
+
+        job_command = f'cd {mara_root_path} && {venv_wrapper_script_path} flask {command}'
 
         if args:
             for param, value in args.items() if args else {}:
