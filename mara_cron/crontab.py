@@ -61,6 +61,7 @@ def generate() -> CronTab:
                 job = None
                 for j in cron.find_comment(job_comment):
                     job = j
+                    job.set_command(cronjob.command)
                     break
 
                 if not job:
