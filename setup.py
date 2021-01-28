@@ -10,7 +10,7 @@ def get_long_description():
 
 setup(
     name='mara-cron',
-    version='0.9.0',
+    version='0.9.1',
 
     description='Lets you manage cron jobs via mara',
 
@@ -21,7 +21,7 @@ setup(
 
     install_requires=[
         'mara-app>=2.2.0',
-        'mara-page>=1.6.0',
+        'mara-page>=1.5.2',
         'python-crontab>=2.5.1',
         'click>=7.1.2',
     ],
