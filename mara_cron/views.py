@@ -42,6 +42,7 @@ def _cronjob_modules(with_cronjobs=True):
                         {
                             'doc': cronjob.description,
                             'time_pattern': cronjob.time_pattern,
+                            'enabled': cronjob.enabled,
                             'command': cronjob.command
                         }
 
@@ -61,10 +62,19 @@ def crontab_page():
                               header_left=html.escape(module_name),
                               body=[_.p[_.em[html.escape(str(module['doc']))]],
                                     bootstrap.table(
-                                        ['ID', 'Description', 'Time pattern', 'Command'],
+                                        ['ID', 'Description', 'Status', 'Time pattern', 'Command'],
                                         [_.tr[
                                              _.td[html.escape(cronjob_id)],
                                              _.td[_.em[html.escape(cronjob['doc'])]],
+                                             _.td[
+                                                 _.span[
+                                                     _.div(class_='fa fa-fw fa-play', style='color: green')[''],
+                                                     'enabled'
+                                                 ] if cronjob['enabled'] == True else _.span[
+                                                     _.div(class_='fa fa-fw fa-stop', style='color: red')[''],
+                                                     'disabled'
+                                                 ]
+                                             ],
                                              _.td[_.pre[html.escape(cronjob['time_pattern'])]],
                                              _.td[
                                                  _.pre[html.escape(pprint.pformat(cronjob['command']))]
