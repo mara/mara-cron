@@ -1,5 +1,8 @@
 import os
 import pathlib
+import shlex
+
+from . import config
 
 
 class CronJob():
@@ -12,6 +15,28 @@ class CronJob():
         self.time_pattern = time_pattern
         self.command = command
         self.enabled = enabled
+
+    @property
+    def shell_command(self):
+        if config.log_path():
+            log_path = pathlib.Path(config.log_path())
+
+            log_full_path = None
+            if log_path.is_file():
+                log_full_path = str(log_path.absolute())
+            elif log_path.is_dir():
+                log_full_path = str((log_path / 'mara-cron_$(date "+%Y%m%d_%H%M%S").log').absolute())
+
+            if log_full_path:
+                log_job_id = f'{config.instance_name()}:{self.id}' if config.instance_name() else self.id
+                log_command = f'{{ echo "MARA CRON JOB {log_job_id} START $(date)"; {self.command}; echo "MARA CRON JOB {log_job_id} END $(date)" ; }}'
+
+                if '$' not in log_full_path:
+                    log_full_path = shlex.quote(log_full_path)
+
+                return f'{log_command} >> {log_full_path} 2>&1'
+
+        return self.command
 
 
 class MaraJob(CronJob):

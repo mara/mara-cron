@@ -61,11 +61,11 @@ def generate() -> CronTab:
                 job = None
                 for j in cron.find_comment(job_comment):
                     job = j
-                    job.set_command(cronjob.command)
+                    job.set_command(cronjob.shell_command)
                     break
 
                 if not job:
-                    job = cron.new(command=cronjob.command, comment=job_comment)
+                    job = cron.new(command=cronjob.shell_command, comment=job_comment)
 
                 job.setall(cronjob.time_pattern)
 

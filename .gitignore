@@ -130,3 +130,6 @@ dmypy.json
 
 # Editors/IDEs
 /.idea/
+
+# mara_cron tmp log folder
+/tests/logs/

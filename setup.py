@@ -25,9 +25,9 @@ setup(
         'python-crontab>=2.5.1',
         'click>=7.1.2',
     ],
-    #extras_require={
-    #    'test': ['pytest']
-    #},
+    extras_require={
+        'test': ['pytest']
+    },
 
     python_requires='>=3.6',
 
