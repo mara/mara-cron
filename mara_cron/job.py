@@ -28,8 +28,7 @@ class CronJob():
                 log_full_path = str((log_path / 'mara-cron_$(date "+%Y%m%d_%H%M%S").log').absolute())
 
             if log_full_path:
-                log_job_id = f'{config.instance_name()}:{self.id}' if config.instance_name() else self.id
-                log_command = f'{{ echo "MARA CRON JOB {log_job_id} START $(date)"; {self.command}; echo "MARA CRON JOB {log_job_id} END $(date)" ; }}'
+                log_command = f'{{ echo "MARA CRON JOB {self.id} START $(date)"; {self.command}; echo "MARA CRON JOB {self.id} END $(date)" ; }}'
 
                 if '$' not in log_full_path:
                     log_full_path = shlex.quote(log_full_path)
