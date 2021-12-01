@@ -7,14 +7,13 @@ from . import config
 
 class CronJob():
     """ A cron job configuration """
-    def __init__(self, id: str, description: str,
-                 time_pattern: str, command: str,
-                 enabled: bool = True):
+    def __init__(self, id: str, description: str, command: str,
+                 default_time_pattern: str = None, default_enabled: bool = True):
         self.id = id
         self.description = description
-        self.time_pattern = time_pattern
+        self.time_pattern = default_time_pattern
         self.command = command
-        self.enabled = enabled
+        self.enabled = default_enabled
 
     @property
     def shell_command(self):
@@ -40,8 +39,8 @@ class CronJob():
 
 class MaraJob(CronJob):
     """ A configuration for a mara job"""
-    def __init__(self, id: str, description: str, time_pattern: str, command: str,
-                 args: dict = None, enabled = True):
+    def __init__(self, id: str, description: str, command: str, args: dict = None,
+                 default_time_pattern: str = None, default_enabled = True):
         virtual_env_path = os.environ['VIRTUAL_ENV']
         if not virtual_env_path:
             raise Exception('Could not determine virtual environment path. VIRTUAL_ENV not set')
@@ -55,12 +54,13 @@ class MaraJob(CronJob):
                 job_command += f' {param}' \
                                 + (f' {value}' if value and not isinstance(value, bool) else '')
 
-        super().__init__(id, description, time_pattern=time_pattern, command=job_command, enabled=enabled)
+        super().__init__(id=id, description=description, command=job_command,
+                         default_time_pattern=default_time_pattern, default_enabled=default_enabled)
 
 class RunPipelineJob(MaraJob):
     """ A configuration for a job executing a mara pipeline"""
-    def __init__(self, id: str, description: str, time_pattern: str, path: str,
-                 nodes: [str] = None, with_upstreams: bool = False, enabled = True):
+    def __init__(self, id: str, description: str, path: str, nodes: [str] = None, with_upstreams: bool = False,
+                 default_time_pattern: str = None, default_enabled = True):
         """
         A job running a mara pipeline.
         """
@@ -74,5 +74,5 @@ class RunPipelineJob(MaraJob):
         if with_upstreams:
             args['--with_upstreams'] = with_upstreams
 
-        super().__init__(id=id, description=description, time_pattern=time_pattern, command=command, args=args,
-                         enabled=enabled)
+        super().__init__(id=id, description=description, command=command, args=args,
+                         default_time_pattern=default_time_pattern, default_enabled=default_enabled)

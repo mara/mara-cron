@@ -65,13 +65,18 @@ def generate() -> CronTab:
                     break
 
                 if not job:
+                    if not cronjob.time_pattern:
+                        continue
                     job = cron.new(command=cronjob.shell_command, comment=job_comment)
 
-                job.setall(cronjob.time_pattern)
+                enabled = cronjob.enabled and config.enabled()
 
-                enabled = cronjob.enabled
-                if enabled and not config.enabled():
+                if cronjob.time_pattern:
+                    job.setall(cronjob.time_pattern)
+                else:
+                    # time pattern not set, keep the current time pattern and disable the cronjob
                     enabled = False
+
                 job.enable(enabled)
 
     return cron
