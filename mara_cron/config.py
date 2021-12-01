@@ -60,5 +60,8 @@ def log_path(): # -> t.Optional[t.Union[str, pathlib.Path]]:
 
         Each execution will append to the file. NOTE: When several jobs run at the same time, it will be
         maybe hard to determine to which execution the log line belongs.
+    
+    WARNING: Make sure that the user cron runs on has write access to the log_path. Otherwise the whole
+             job will break with the error: Permission denied
     """
     return None
