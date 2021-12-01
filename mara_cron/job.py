@@ -39,7 +39,7 @@ class CronJob():
 
 
 class MaraJob(CronJob):
-    """ A configuration for a mara command"""
+    """ A configuration for a mara job"""
     def __init__(self, id: str, description: str, time_pattern: str, command: str,
                  args: dict = None, enabled = True):
         virtual_env_path = os.environ['VIRTUAL_ENV']
@@ -55,5 +55,24 @@ class MaraJob(CronJob):
                 job_command += f' {param}' \
                                 + (f' {value}' if value and not isinstance(value, bool) else '')
 
-        super().__init__(id, description, time_pattern=time_pattern, command=job_command,
+        super().__init__(id, description, time_pattern=time_pattern, command=job_command, enabled=enabled)
+
+class RunPipelineJob(MaraJob):
+    """ A configuration for a job executing a mara pipeline"""
+    def __init__(self, id: str, description: str, time_pattern: str, path: str,
+                 nodes: [str] = None, with_upstreams: bool = False, enabled = True):
+        """
+        A job running a mara pipeline.
+        """
+        command = 'mara_pipelines.ui.run'
+        args = {
+            '--path': path,
+            '--disable-colors': False
+        }
+        if nodes:
+            args['--nodes'] = ','.join(nodes)
+        if with_upstreams:
+            args['--with_upstreams'] = with_upstreams
+
+        super().__init__(id=id, description=description, time_pattern=time_pattern, command=command, args=args,
                          enabled=enabled)
