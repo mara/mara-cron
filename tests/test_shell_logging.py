@@ -16,7 +16,7 @@ MARA_LOG_FILE_PATTERN = 'mara-cron_*.log'
 def job_echo_hello_world() -> CronJob:
     return CronJob(id='test_job',
                    description="",
-                   time_pattern="00 1 * * *",
+                   default_time_pattern="00 1 * * *",
                    command=ECHO_HELLO_WORLD_COMMAND)
 
 

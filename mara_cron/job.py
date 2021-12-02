@@ -57,6 +57,7 @@ class MaraJob(CronJob):
         super().__init__(id=id, description=description, command=job_command,
                          default_time_pattern=default_time_pattern, default_enabled=default_enabled)
 
+
 class RunPipelineJob(MaraJob):
     """ A configuration for a job executing a mara pipeline"""
     def __init__(self, id: str, description: str, path: str, nodes: [str] = None, with_upstreams: bool = False,
