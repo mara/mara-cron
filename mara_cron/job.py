@@ -47,7 +47,7 @@ class MaraJob(CronJob):
 
         mara_root_path = pathlib.Path(virtual_env_path).parent.resolve()
 
-        job_command = f'cd {mara_root_path} ; source .venv/bin/activate ; flask {command}'
+        job_command = f'cd {mara_root_path} ; . ./.venv/bin/activate ; flask {command}'
 
         if args:
             for param, value in args.items() if args else {}:
