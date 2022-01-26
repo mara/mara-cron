@@ -60,16 +60,17 @@ class MaraJob(CronJob):
 
 class RunPipelineJob(MaraJob):
     """ A configuration for a job executing a mara pipeline"""
-    def __init__(self, id: str, description: str, path: str, nodes: [str] = None, with_upstreams: bool = False,
+    def __init__(self, id: str, description: str, path: str = None, nodes: [str] = None, with_upstreams: bool = False,
                  default_time_pattern: str = None, default_enabled = True):
         """
         A job running a mara pipeline.
         """
         command = 'mara_pipelines.ui.run'
         args = {
-            '--path': path,
             '--disable-colors': False
         }
+        if path:
+            args['--path'] = path
         if nodes:
             args['--nodes'] = ','.join(nodes)
         if with_upstreams:
