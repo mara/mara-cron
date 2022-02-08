@@ -11,16 +11,24 @@ from . import config
 class CronJob():
     """ A cron job configuration """
     def __init__(self, id: str, description: str, command: str,
-                 default_time_pattern: str = None, default_enabled: bool = True):
+                 default_time_pattern: str = None, default_enabled: bool = True,
+                 max_retries: int = None):
         self.id = id
         self.description = description
         self.time_pattern = default_time_pattern
         self.command = command
         self.enabled = default_enabled
+        self.max_retries = max_retries
 
     @property
     def shell_command(self):
+        max_retries = self.max_retries
+        if max_retries is None:
+            max_retries = config.default_job_max_retries()
+
         if config.log_path():
+            if max_retries:
+                raise ValueError('ERROR: Logging of a cron job cannot be combined with max_retries in the current version of mara_cron!')
             log_path = pathlib.Path(config.log_path())
 
             log_full_path = None
@@ -36,6 +44,9 @@ class CronJob():
                     log_full_path = shlex.quote(log_full_path)
 
                 return f'{log_command} >> {log_full_path} 2>&1'
+
+        if self.max_retries:
+            return f"for i in {' '.join([str(2**(i+3)) for i in range(max_retries+1)])} 0; do ({self.command}) && break || sleep $i; done"
 
         return self.command
 
