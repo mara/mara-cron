@@ -75,7 +75,7 @@ def crontab_page():
                                                      'disabled'
                                                  ]
                                              ],
-                                             _.td[_.pre[html.escape(cronjob['time_pattern'])]],
+                                             _.td[_.pre[html.escape(cronjob['time_pattern'] or '')]],
                                              _.td[
                                                  _.pre[html.escape(pprint.pformat(cronjob['command']))]
                                                  if current_user_has_permission
