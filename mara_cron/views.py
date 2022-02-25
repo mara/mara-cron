@@ -4,13 +4,11 @@ import copy
 import functools
 import html
 import sys
-import types
 import typing
 
 import flask
-from werkzeug.utils import escape
-from mara_app import monkey_patch
 from mara_page import acl, navigation, response, _, bootstrap, xml
+from . import config
 
 from .job import CronJob
 
@@ -62,7 +60,7 @@ def crontab_page():
                               header_left=html.escape(module_name),
                               body=[_.p[_.em[html.escape(str(module['doc']))]],
                                     bootstrap.table(
-                                        ['ID', 'Description', 'Status', 'Time pattern', 'Command'],
+                                        ['ID', 'Description', 'Status', 'Time pattern', 'Command', 'Actions'],
                                         [_.tr[
                                              _.td[html.escape(cronjob_id)],
                                              _.td[_.em[html.escape(cronjob['doc'])]],
@@ -80,6 +78,12 @@ def crontab_page():
                                                  _.pre[html.escape(pprint.pformat(cronjob['command']))]
                                                  if current_user_has_permission
                                                  else acl.inline_permission_denied_message()
+                                             ],
+                                             _.td[
+                                                 bootstrap.button(url=flask.url_for('mara_cron.do_schedule_run', job_id=cronjob_id),
+                                                                  label='Schedule run', icon='play',
+                                                                  title='Schedule this task to run in less then 1 minute')
+                                                     if cronjob.get('enabled',False) and config.allow_run_from_web_ui() else '',
                                              ]] for cronjob_id, cronjob in module['cronjobs'].items()])
                                     ]) if module['cronjobs'] else '')
               for module_name, module in sorted(_cronjob_modules().items())],

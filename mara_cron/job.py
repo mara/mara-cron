@@ -1,6 +1,9 @@
+import copy
 import os
 import pathlib
 import shlex
+import sys
+import typing
 
 from . import config
 
@@ -78,3 +81,35 @@ class RunPipelineJob(MaraJob):
 
         super().__init__(id=id, description=description, command=command, args=args,
                          default_time_pattern=default_time_pattern, default_enabled=default_enabled)
+
+
+def _iterate_cronjobs() -> typing.Dict[str, typing.List[CronJob]]:
+    for module_name, module in copy.copy(sys.modules).items():
+        if 'MARA_CRON_JOBS' in dir(module):
+            cronjobs = getattr(module, 'MARA_CRON_JOBS')
+            if isinstance(cronjobs, typing.Callable):
+                cronjobs = cronjobs()
+            assert (isinstance(cronjobs, typing.Iterable))
+            for cronjob in cronjobs:
+                assert (isinstance(cronjob, CronJob))
+                yield module_name, cronjob
+
+
+def find_job(id: str, module_name: str = None) -> CronJob:
+    """
+    Retrieves a job by the the job id
+    Args:
+        module_name: The name of the module
+        id: The id of the job
+
+    Returns:
+        A CronJob object or None when the job was not found
+    """
+    if module_name:
+        raise ValueError('Arg. module_name is not yet supported')
+
+    for _, cronjob in _iterate_cronjobs():
+        if cronjob.id == id:
+            return cronjob
+
+    return None

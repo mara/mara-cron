@@ -7,7 +7,7 @@ def MARA_CONFIG_MODULES():
 
 
 def MARA_FLASK_BLUEPRINTS():
-    from . import views
+    from . import ui, views
     return [views.blueprint]
 
 

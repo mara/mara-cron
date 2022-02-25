@@ -39,6 +39,11 @@ def tabfile() -> t.Optional[str]:
     return None
 
 
+def allow_run_from_web_ui() -> bool:
+    """When false, then it is not possible to start a cron job manually via the web UI"""
+    return True
+
+
 def log_path(): # -> t.Optional[t.Union[str, pathlib.Path]]:
     """
     The log path to which to log the command output.
