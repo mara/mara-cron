@@ -80,10 +80,13 @@ def crontab_page():
                                                  else acl.inline_permission_denied_message()
                                              ],
                                              _.td[
-                                                 bootstrap.button(url=flask.url_for('mara_cron.do_schedule_run', job_id=cronjob_id),
-                                                                  label='Schedule run', icon='play',
-                                                                  title='Schedule this task to run in less then 1 minute')
-                                                     if cronjob.get('enabled',False) and config.allow_run_from_web_ui() else '',
+                                                 _.span[
+                                                    bootstrap.button(url=flask.url_for('mara_cron.do_schedule_run', job_id=cronjob_id),
+                                                                    label='Schedule run', icon='play',
+                                                                    title='Schedule this task to run in less then 1 minute')
+                                                        if cronjob.get('enabled',False) and config.allow_run_from_web_ui() else '',
+                                                 ] if current_user_has_permission
+                                                 else acl.inline_permission_denied_message()
                                              ]] for cronjob_id, cronjob in module['cronjobs'].items()])
                                     ]) if module['cronjobs'] else '')
               for module_name, module in sorted(_cronjob_modules().items())],
