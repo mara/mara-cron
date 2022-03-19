@@ -16,13 +16,14 @@ pip install git+https://github.com/mara/mara-cron.git
 
 ## Config of cron jobs
 
-In order to configure cronjobs in mara you just need to add a new function `MARA_CRON_JOBS`
+To configure cron jobs in mara you just need to add a new function `MARA_CRON_JOBS`
 in your module or app in the `__init__.py` file.
 
 Here is a sample which has two jobs:
 1. the job `cleanup_data_folder` clears all data from the local folder `/data/`. This job is by default disabled.
 2. the job `nightly` runs the root pipeline at 01:00 o'clock each day
 
+_Note:_ The MaraJob job requires that you define the `PATH` environment variable in your crontab. Cron by default uses just `/usr/bin:/bin` which is not enough. I recommend using the distribution default e.g. `/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin`.
 
 ```python
 def MARA_CRON_JOBS():

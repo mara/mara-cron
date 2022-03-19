@@ -20,13 +20,13 @@ setup(
     url='https://github.com/mara/mara-cron',
 
     install_requires=[
-        'mara-app>=2.2.0',
         'mara-page>=1.5.2',
         'python-crontab>=2.5.1',
         'click>=7.1.2',
     ],
     extras_require={
-        'test': ['pytest']
+        'test': ['pytest',
+                 'mara-app>=2.2.0']
     },
 
     python_requires='>=3.6',
