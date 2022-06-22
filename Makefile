@@ -15,6 +15,7 @@ install:
 test:
 	# test of module
 	.venv/bin/pip install .[test]
+	mkdir -p tests/logs
 	.venv/bin/pytest
 
 

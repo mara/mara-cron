@@ -30,4 +30,6 @@ jobs:
           echo Finished successful build with Python $pythonversion
       - name: Test with pytest
         run: |
+          pip install .[test]
+          mkdir -p tests/logs
           pytest -v tests
