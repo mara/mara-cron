@@ -10,6 +10,7 @@ all:
 install:
 	# install of module
 	.venv/bin/python setup.py install
+	.venv/bin/pip install .
 
 
 test:
