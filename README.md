@@ -9,7 +9,7 @@ Mini package for managing cron jobs via mara.
 To use the library directly:
 
 ```
-pip install git+https://github.com/mara/mara-cron.git
+pip install mara-cron
 ```
 
 &nbsp;
