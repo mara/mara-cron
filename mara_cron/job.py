@@ -45,7 +45,7 @@ class CronJob():
 
                 return f'{log_command} >> {log_full_path} 2>&1'
 
-        if self.max_retries:
+        if max_retries:
             return f"for i in {' '.join([str(2**(i+3)) for i in range(max_retries+1)])} 0; do ({self.command}) && break || sleep $i; done"
 
         return self.command
