@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.5 (2022-06-24)
+
+- fix add missing `max_retries` option to job class `MaraJob`, `RunPipelineJob`
+
 ## 0.9.3-4 (2022-06-22)
 
 - add `max_retries` option (#1)

@@ -54,7 +54,8 @@ class CronJob():
 class MaraJob(CronJob):
     """ A configuration for a mara job"""
     def __init__(self, id: str, description: str, command: str, args: dict = None,
-                 default_time_pattern: str = None, default_enabled = True):
+                 default_time_pattern: str = None, default_enabled = True,
+                 max_retries: int = None):
         virtual_env_path = os.environ['VIRTUAL_ENV']
         if not virtual_env_path:
             raise Exception('Could not determine virtual environment path. VIRTUAL_ENV not set')
@@ -69,13 +70,15 @@ class MaraJob(CronJob):
                                 + (f' {value}' if value and not isinstance(value, bool) else '')
 
         super().__init__(id=id, description=description, command=job_command,
-                         default_time_pattern=default_time_pattern, default_enabled=default_enabled)
+                         default_time_pattern=default_time_pattern, default_enabled=default_enabled,
+                         max_retries=max_retries)
 
 
 class RunPipelineJob(MaraJob):
     """ A configuration for a job executing a mara pipeline"""
     def __init__(self, id: str, description: str, path: str = None, nodes: [str] = None, with_upstreams: bool = False,
-                 default_time_pattern: str = None, default_enabled = True):
+                 default_time_pattern: str = None, default_enabled = True,
+                 max_retries: int = None):
         """
         A job running a mara pipeline.
         """
@@ -91,7 +94,8 @@ class RunPipelineJob(MaraJob):
             args['--with_upstreams'] = with_upstreams
 
         super().__init__(id=id, description=description, command=command, args=args,
-                         default_time_pattern=default_time_pattern, default_enabled=default_enabled)
+                         default_time_pattern=default_time_pattern, default_enabled=default_enabled,
+                         max_retries=max_retries)
 
 
 def _iterate_cronjobs() -> typing.Dict[str, typing.List[CronJob]]:
