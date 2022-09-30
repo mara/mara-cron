@@ -31,12 +31,12 @@ def MARA_CRON_JOBS():
     return [
         CronJob(id='cleanup_data_folder',
                 description='Clean up the data folder',
-                time_pattern='0 0 * * *',
+                default_time_pattern='0 0 * * *',
                 command='rm -rf /data/*',
                 enabled=False),
         MaraJob(id='nightly',
                 description="Nightly run of the BI system",
-                time_pattern='0 1 * * *',
+                default_time_pattern='0 1 * * *',
                 command='mara_pipelines.ui.run'),
     ]
 ```
