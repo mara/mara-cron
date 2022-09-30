@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.9.6 (2022-09-30)
+
+- allow to run disabled jobs manually via UI
+- fix config.default_job_max_retries did not work
+
 ## 0.9.5 (2022-06-24)
 
 - fix add missing `max_retries` option to job class `MaraJob`, `RunPipelineJob`
