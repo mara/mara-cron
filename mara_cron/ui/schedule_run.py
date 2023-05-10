@@ -17,11 +17,11 @@ def do_schedule_run(job_id: str):
     print(f'schedule {job_id}')
 
     return response.Response(
-        title=f'Task scheduled',
+        title=f'Job scheduled',
         html=bootstrap.card(
             body=_.div[
                     _.p[
-                        """The task is scheduled to run in less then 1 minute."""
+                        """The job is scheduled to run in less then 1 minute."""
                     ],
                     bootstrap.button(url='javascript:history.back()',
                                      label='Go to last page', icon='play',
