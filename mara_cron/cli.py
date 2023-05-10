@@ -2,7 +2,7 @@ import sys
 import click
 from mara_cron import config
 
-from . import crontab
+from . import crontab, job
 
 
 @click.command()
@@ -46,6 +46,22 @@ def enable(job_id: str, module_name: str):
     job.enable(True)
 
     cron.write()
+    sys.exit(0)
+
+
+@click.command()
+@click.option('--job-id', required=True,
+              help='The id of of the cron job.')
+def schedule_job(job_id: str):
+    """ Schedules a job to run. """
+    cronjob = job.find_job(job_id)
+    if not cronjob:
+        print('Could not find job id "{job_id}"')
+        sys.exit(1)
+
+    crontab.append_single_execution_job(cronjob)
+
+    print(f'Job {job_id} is scheduled to run in less than 1 minute')
     sys.exit(0)
 
 
