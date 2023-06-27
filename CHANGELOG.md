@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.10.0 (2023-06-27)
+
+- add cli command `mara_cron.schedule-job` (#3)
+
 ## 0.9.6 (2022-09-30)
 
 - allow to run disabled jobs manually via UI
