@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.10.0 (2023-06-27)
+## 0.10.0-1 (2023-06-27)
 
 - add cli command `mara_cron.schedule-job` (#3)
 
