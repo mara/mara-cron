@@ -17,7 +17,7 @@ def disable(job_id: str, module_name: str):
     job = crontab.get_job(cron, job_id=job_id, module_name=module_name)
 
     if not job:
-        print('Could not find cronjob')
+        print(f'Could not find cronjob "{job_id}"', file=sys.stderr)
         sys.exit(1)
 
     job.enable(False)
@@ -40,7 +40,7 @@ def enable(job_id: str, module_name: str):
     job = crontab.get_job(cron, job_id=job_id, module_name=module_name)
 
     if not job:
-        print('Could not find cronjob')
+        print(f'Could not find cronjob "{job_id}"', file=sys.stderr)
         sys.exit(1)
 
     job.enable(True)
@@ -56,7 +56,7 @@ def schedule_job(job_id: str):
     """ Schedules a job to run. """
     cronjob = job.find_job(job_id)
     if not cronjob:
-        print('Could not find job id "{job_id}"')
+        print(f'Could not find job with id "{job_id}"', file=sys.stderr)
         sys.exit(1)
 
     crontab.append_single_execution_job(cronjob)
