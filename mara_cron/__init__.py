@@ -20,12 +20,13 @@ def MARA_ACL_RESOURCES():
 def MARA_CLICK_COMMANDS():
     from . import cli
     return [
-        cli.enable,
-        cli.disable,
-        cli.schedule_job,
-        cli.list_crontab,
-        cli.write_crontab,
-        cli.clear_crontab
+        cli.mara_cron,
+        cli._enable,
+        cli._disable,
+        cli._schedule_job,
+        cli._list_crontab,
+        cli._write_crontab,
+        cli._clear_crontab
     ]
 
 
