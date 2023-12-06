@@ -1,11 +1,18 @@
 import sys
+from warnings import warn
 import click
 from mara_cron import config
 
 from . import crontab, job
 
 
-@click.command()
+@click.group()
+def mara_cron():
+    """Let you sync. mara jobs with your crontab"""
+    pass
+
+
+@mara_cron.command()
 @click.option('--job-id', required=True,
               help='The id of of the cron job.')
 @click.option('--module', default=None,
@@ -25,7 +32,7 @@ def disable(job_id: str, module_name: str):
     sys.exit(0)
 
 
-@click.command()
+@mara_cron.command()
 @click.option('--job-id', required=True,
               help='The id of of the cron job.')
 @click.option('--module', default=None,
@@ -49,7 +56,7 @@ def enable(job_id: str, module_name: str):
     sys.exit(0)
 
 
-@click.command()
+@mara_cron.command()
 @click.option('--job-id', required=True,
               help='The id of of the cron job.')
 def schedule_job(job_id: str):
@@ -65,7 +72,7 @@ def schedule_job(job_id: str):
     sys.exit(0)
 
 
-@click.command()
+@mara_cron.command()
 @click.option('--with-changes', default=False, is_flag=True,
               help='Lists the current crontab including the not written changes.')
 def list_crontab(with_changes: bool):
@@ -79,7 +86,7 @@ def list_crontab(with_changes: bool):
     print(cron)
 
 
-@click.command()
+@mara_cron.command()
 def write_crontab():
     """ Updates the current crontab """
     cron = crontab.generate()
@@ -87,7 +94,7 @@ def write_crontab():
     cron.write()
 
 
-@click.command()
+@mara_cron.command()
 def clear_crontab():
     """ Removes all mara jobs from the crontab """
     cron = crontab.current()
@@ -98,3 +105,59 @@ def clear_crontab():
             job.delete()
 
     cron.write()
+
+
+# Old cli commands to be dropped in 5.0:
+
+@click.command()
+@click.option('--job-id', required=True,
+              help='The id of of the cron job.')
+@click.option('--module', default=None,
+              help='The module name the cron job.')
+def _disable(job_id: str, module_name: str):
+    """ disables a specific cronjob """
+    warn("CLI command `<app> mara_cron.disable` will be dropped in 5.0. Please use: `<app> mara-cron disable`")
+    disable.callback(job_id=job_id, module_name=module_name)
+
+
+@click.command()
+@click.option('--job-id', required=True,
+              help='The id of of the cron job.')
+@click.option('--module', default=None,
+              help='The module name the cron job.')
+def _enable(job_id: str, module_name: str):
+    """ enables a specific cronjob """
+    warn("CLI command `<app> mara_cron.enable` will be dropped in 5.0. Please use: `<app> mara-cron enable`")
+    enable.callback(job_id=job_id, module_name=module_name)
+
+
+@click.command()
+@click.option('--job-id', required=True,
+              help='The id of of the cron job.')
+def _schedule_job(job_id: str):
+    """ Schedules a job to run. """
+    warn("CLI command `<app> mara_cron.schedule_job` will be dropped in 5.0. Please use: `<app> mara-cron schedule_job`")
+    schedule_job.callback(job_id=job_id)
+
+
+@click.command()
+@click.option('--with-changes', default=False, is_flag=True,
+              help='Lists the current crontab including the not written changes.')
+def _list_crontab(with_changes: bool):
+    """ List the crontab content """
+    warn("CLI command `<app> mara_cron.list_crontab` will be dropped in 5.0. Please use: `<app> mara-cron list_crontab`")
+    list_crontab.callback(with_changes=with_changes)
+
+
+@click.command("write_crontab")
+def _write_crontab():
+    """ Updates the current crontab """
+    warn("CLI command `<app> mara_cron.write_crontab` will be dropped in 5.0. Please use: `<app> mara-cron write_crontab`")
+    write_crontab.callback()
+
+
+@click.command("clear_crontab")
+def _clear_crontab():
+    """ Removes all mara jobs from the crontab """
+    warn("CLI command `<app> mara_cron.clear_crontab` will be dropped in 5.0. Please use: `<app> mara-cron clear_crontab`")
+    clear_crontab.callback()
