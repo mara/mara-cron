@@ -107,7 +107,7 @@ def clear_crontab():
     cron.write()
 
 
-# Old cli commands to be dropped in 5.0:
+# Old cli commands to be dropped in 1.0:
 
 @click.command()
 @click.option('--job-id', required=True,

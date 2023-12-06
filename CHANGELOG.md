@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.11.0 (2023-12-06)
+
+- add entry point `mara.commands` (for [mara-cli](https://github.com/mara/mara-cli) support)
+- add `mara-cron` click group. Commands outside of the click group will be dropped in 1.0.0 release
+
 ## 0.10.0-1 (2023-06-27)
 
 - add cli command `mara_cron.schedule-job` (#3)
