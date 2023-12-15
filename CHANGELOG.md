@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.11.1 (2023-12-15)
+## 0.11.1-2 (2023-12-15)
 
 - fix old CLI command names
 
