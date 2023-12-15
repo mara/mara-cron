@@ -109,7 +109,7 @@ def clear_crontab():
 
 # Old cli commands to be dropped in 1.0:
 
-@click.command()
+@click.command("disable")
 @click.option('--job-id', required=True,
               help='The id of of the cron job.')
 @click.option('--module', default=None,
@@ -120,7 +120,7 @@ def _disable(job_id: str, module_name: str):
     disable.callback(job_id=job_id, module_name=module_name)
 
 
-@click.command()
+@click.command("enable")
 @click.option('--job-id', required=True,
               help='The id of of the cron job.')
 @click.option('--module', default=None,
@@ -131,7 +131,7 @@ def _enable(job_id: str, module_name: str):
     enable.callback(job_id=job_id, module_name=module_name)
 
 
-@click.command()
+@click.command("schedule_job")
 @click.option('--job-id', required=True,
               help='The id of of the cron job.')
 def _schedule_job(job_id: str):
@@ -140,7 +140,7 @@ def _schedule_job(job_id: str):
     schedule_job.callback(job_id=job_id)
 
 
-@click.command()
+@click.command("list_crontab")
 @click.option('--with-changes', default=False, is_flag=True,
               help='Lists the current crontab including the not written changes.')
 def _list_crontab(with_changes: bool):
