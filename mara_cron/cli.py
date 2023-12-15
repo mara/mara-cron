@@ -131,7 +131,7 @@ def _enable(job_id: str, module_name: str):
     enable.callback(job_id=job_id, module_name=module_name)
 
 
-@click.command("schedule_job")
+@click.command("schedule-job")
 @click.option('--job-id', required=True,
               help='The id of of the cron job.')
 def _schedule_job(job_id: str):
@@ -140,7 +140,7 @@ def _schedule_job(job_id: str):
     schedule_job.callback(job_id=job_id)
 
 
-@click.command("list_crontab")
+@click.command("list-crontab")
 @click.option('--with-changes', default=False, is_flag=True,
               help='Lists the current crontab including the not written changes.')
 def _list_crontab(with_changes: bool):
@@ -149,14 +149,14 @@ def _list_crontab(with_changes: bool):
     list_crontab.callback(with_changes=with_changes)
 
 
-@click.command("write_crontab")
+@click.command("write-crontab")
 def _write_crontab():
     """ Updates the current crontab """
     warn("CLI command `<app> mara_cron.write_crontab` will be dropped in 5.0. Please use: `<app> mara-cron write_crontab`")
     write_crontab.callback()
 
 
-@click.command("clear_crontab")
+@click.command("clear-crontab")
 def _clear_crontab():
     """ Removes all mara jobs from the crontab """
     warn("CLI command `<app> mara_cron.clear_crontab` will be dropped in 5.0. Please use: `<app> mara-cron clear_crontab`")
