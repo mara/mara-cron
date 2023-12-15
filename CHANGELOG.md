@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.11.1 (2023-12-15)
+
+- fix old CLI command names
+
 ## 0.11.0 (2023-12-06)
 
 - add entry point `mara.commands` (for [mara-cli](https://github.com/mara/mara-cli) support)
