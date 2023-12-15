@@ -63,14 +63,14 @@ patch(mara_cron.config.instance_name)(lambda: 'prod')
 
 ## CLI
 
-This package contains the following cli commands:
+This package contains the following cli commands (`mara cron <command>`):
 
 | Command        | Description
 | -------------- | --------------
-| `mara_cron.enable --job-id "my_job_id" [--module "module_name"]` | Enables a specific job regardless of the configuration.
-| `mara_cron.disable --job-id "my_job_id" [--module "module_name"]` | Disables a specific job.
-| `mara_cron.schedule-job --job-id "my_job_id"` | Schedules a job to run in less than 1 minute.
-| `mara_cron.list-crontab` | Lists the current cron tab settings
-| `mara_cron.list-crontab --with-changes` | Lists the current cron tab including the changes not yet written
-| `mara_cron.write-crontab` | Writes all not published changes to the crontab
-| `mara_cron.clear-crontab` | Removes all mara jobs from the crontab. *Note* This applies to all instances !!!
+| `enable --job-id "my_job_id" [--module "module_name"]` | Enables a specific job regardless of the configuration.
+| `disable --job-id "my_job_id" [--module "module_name"]` | Disables a specific job.
+| `schedule-job --job-id "my_job_id"` | Schedules a job to run in less than 1 minute.
+| `list-crontab` | Lists the current cron tab settings
+| `list-crontab --with-changes` | Lists the current cron tab including the changes not yet written
+| `write-crontab` | Writes all not published changes to the crontab
+| `clear-crontab` | Removes all mara jobs from the crontab. *Note* This applies to all instances !!!
