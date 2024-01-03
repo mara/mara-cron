@@ -37,7 +37,7 @@ def MARA_CRON_JOBS():
         MaraJob(id='nightly',
                 description="Nightly run of the BI system",
                 default_time_pattern='0 1 * * *',
-                command='mara_pipelines.ui.run'),
+                command='pipelines run'),
     ]
 ```
 
@@ -52,7 +52,7 @@ import mara_cron.config
 # Activates mara_cron jobs. If not set all jobs are
 # by default disabled and can only be activated via
 # executing:
-#    flask mara_cron.enable --job-id "my_job_id"
+#    mara cron enable --job-id "my_job_id"
 patch(mara_cron.config.enabled)(lambda: True)
 
 # Optional parameter to specify a mara instance name

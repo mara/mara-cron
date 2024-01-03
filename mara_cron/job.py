@@ -62,7 +62,7 @@ class MaraJob(CronJob):
 
         mara_root_path = pathlib.Path(virtual_env_path).parent.resolve()
 
-        job_command = f'cd {mara_root_path} ; . ./.venv/bin/activate ; flask {command}'
+        job_command = f'cd {mara_root_path} ; . ./.venv/bin/activate ; mara {command}'
 
         if args:
             for param, value in args.items() if args else {}:
@@ -82,7 +82,7 @@ class RunPipelineJob(MaraJob):
         """
         A job running a mara pipeline.
         """
-        command = 'mara_pipelines.ui.run'
+        command = 'pipelines run'
         args = {
             '--disable-colors': False
         }
