@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.12.0 (2024-01-03)
+
+- use mara cli instead of flask mara commands
+
 ## 0.11.1-2 (2023-12-15)
 
 - fix old CLI command names
